@@ -5,12 +5,26 @@ const TipCalculator = () => {
   const [billAmount, setBillAmount] = useState("");
   const [numPeople, setNumPeople] = useState("");
   const [serviceRating, setServiceRating] = useState("20"); // Default 20% tip
+  const [results, setResults] = useState(null); // Stores calculated values
 
-  // Calculate Tip
-  const tipPercentage = parseFloat(serviceRating) / 100;
-  const tipAmount = billAmount ? parseFloat(billAmount) * tipPercentage : 0;
-  const totalBill = billAmount ? parseFloat(billAmount) + tipAmount : 0;
-  const perPerson = numPeople ? totalBill / parseInt(numPeople) : 0;
+  // Function to calculate tip and total bill
+  const calculateTip = () => {
+    if (!billAmount || !numPeople || numPeople <= 0) {
+      alert("Please enter valid inputs.");
+      return;
+    }
+
+    const tipPercentage = parseFloat(serviceRating) / 100;
+    const tipAmount = parseFloat(billAmount) * tipPercentage;
+    const totalBill = parseFloat(billAmount) + tipAmount;
+    const perPerson = totalBill / parseInt(numPeople);
+
+    setResults({
+      tipAmount: tipAmount.toFixed(2),
+      totalBill: totalBill.toFixed(2),
+      perPerson: perPerson.toFixed(2),
+    });
+  };
 
   return (
     <div className="tip-calculator">
@@ -46,12 +60,18 @@ const TipCalculator = () => {
         </select>
       </div>
 
-      <div className="results">
-        <h3>Results:</h3>
-        <p>Total Tip: ${tipAmount.toFixed(2)}</p>
-        <p>Total Bill (Including Tip): ${totalBill.toFixed(2)}</p>
-        <p>Amount per Person: ${perPerson.toFixed(2)}</p>
-      </div>
+      <button className="calculate-btn" onClick={calculateTip}>
+        Calculate
+      </button>
+
+      {results && (
+        <div className="results">
+          <h3>Results:</h3>
+          <p>Total Tip: ${results.tipAmount}</p>
+          <p>Total Bill (Including Tip): ${results.totalBill}</p>
+          <p>Amount per Person: ${results.perPerson}</p>
+        </div>
+      )}
     </div>
   );
 };
