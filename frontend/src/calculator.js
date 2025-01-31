@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import "./TipCalculator.css"; // Import the CSS file
+import "./TipCalculator.css"; 
 
 const TipCalculator = () => {
-  // State variables for user inputs
+  
   const [billAmount, setBillAmount] = useState("");
   const [numPeople, setNumPeople] = useState("");
-  const [serviceRating, setServiceRating] = useState("20"); // Default 20% tip
-  const [results, setResults] = useState(null); // Stores calculated values
+  const [serviceRating, setServiceRating] = useState("20"); 
+  const [results, setResults] = useState(null); 
 
-  // Function to calculate tip and total bill
+  
   const calculateTip = () => {
     if (!billAmount || !numPeople || numPeople <= 0) {
       alert("Please enter valid inputs.");
